@@ -1200,7 +1200,7 @@ function baseCreateRenderer(
     const compatMountInstance =
       __COMPAT__ && initialVNode.isCompatRoot && initialVNode.component
     // 组件挂载过程：
-    // 1. 组件实例
+    // 1. 创建组件实例
     const instance: ComponentInternalInstance =
       compatMountInstance ||
       (initialVNode.component = createComponentInstance(
@@ -1228,7 +1228,11 @@ function baseCreateRenderer(
       if (__DEV__) {
         startMeasure(instance, `init`)
       }
-      // 2.初始化组件实例
+      // 2.初始化组件实例：
+          // 2.1 setup
+          //   2.1.1 编译render选项
+          // 2.2 apllyOptions
+          //   2.2.1 data/props/methods/computed/watch 响应式
       setupComponent(instance)
       if (__DEV__) {
         endMeasure(instance, `init`)
