@@ -44,6 +44,23 @@ function compileToFunction(
     template = el ? el.innerHTML : ``
   }
 
+  //  执行编译：code返回
+  //  "const _Vue = Vue
+  //   const { createElementVNode: _createElementVNode } = _Vue
+
+  //   const _hoisted_1 = /*#__PURE__*/_createElementVNode("p", null, "hello world~~!", -1 /* HOISTED */)
+
+  //   return function render(_ctx, _cache) {
+  //     with (_ctx) {
+  //       const { toDisplayString: _toDisplayString, createElementVNode: _createElementVNode, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+
+  //       return (_openBlock(), _createElementBlock(_Fragment, null, [
+  //         _createElementVNode("h1", null, _toDisplayString(title), 1 /* TEXT */),
+  //         _hoisted_1
+  //       ], 64 /* STABLE_FRAGMENT */))
+  //     }
+  //   }"
+
   const { code } = compile(
     template,
     extend(
@@ -74,6 +91,8 @@ function compileToFunction(
   // with keys that cannot be mangled, and can be quite heavy size-wise.
   // In the global build we know `Vue` is available globally so we can avoid
   // the wildcard object.
+
+  
   const render = (
     __GLOBAL__ ? new Function(code)() : new Function('Vue', code)(runtimeDom)
   ) as RenderFunction

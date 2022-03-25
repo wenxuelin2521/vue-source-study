@@ -1,0 +1,19 @@
+<div id="app">
+    <h1>{{title}}</h1>
+    <p>hello world~~!</p>
+</div>
+
+<!-- format global  iife -->
+<script src="../dist/vue.global.js"></script>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                title: '初始化流程'
+            }
+        },
+        // render() {
+        //   return Vue.h('h1', this.title)
+        // }
+    }).mount('#app')
+</script>
