@@ -1318,7 +1318,11 @@ function baseCreateRenderer(
     isSVG,
     optimized
   ) => {
+  // 1.创建更新函数
     const componentUpdateFn = () => {
+      // 首次执行时走isMounted这个流程
+      // render -> vnode
+      // patch(vnode) -> dom
       if (!instance.isMounted) {
         let vnodeHook: VNodeHook | null | undefined
         const { el, props } = initialVNode
@@ -1557,6 +1561,9 @@ function baseCreateRenderer(
     }
 
     // create reactive effect for rendering
+    // 2.创建更新机制
+    // 副作用：如果componentUpdateFn执行的过程中有响应式数据发生变化
+    // 则按照参数2的(() => queueJob(instance.update))方式执行参数1
     const effect = (instance.effect = new ReactiveEffect(
       componentUpdateFn,
       () => queueJob(instance.update),
