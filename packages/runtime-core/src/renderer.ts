@@ -1587,6 +1587,7 @@ function baseCreateRenderer(
       update.ownerInstance = instance
     }
 
+    // 3.首次执行组件更新
     update()
   }
 
