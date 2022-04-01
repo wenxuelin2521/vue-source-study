@@ -631,6 +631,7 @@ function baseCreateRenderer(
       // only do this in production since cloned trees cannot be HMR updated.
       el = vnode.el = hostCloneNode(vnode.el)
     } else {
+      // 首次创建一个新节点
       el = vnode.el = hostCreateElement(
         vnode.type as string,
         isSVG,
