@@ -199,8 +199,13 @@ export function resetTracking() {
   shouldTrack = last === undefined ? true : last
 }
 
+// 依赖收集
+// targetMap： { target: { key: [ activeEffect ] } }
+//   WeakMap                Map    Set
 export function track(target: object, type: TrackOpTypes, key: unknown) {
   if (shouldTrack && activeEffect) {
+
+     // 第一次来的时候，需要初始化创建
     let depsMap = targetMap.get(target)
     if (!depsMap) {
       targetMap.set(target, (depsMap = new Map()))
@@ -214,6 +219,7 @@ export function track(target: object, type: TrackOpTypes, key: unknown) {
       ? { effect: activeEffect, target, type, key }
       : undefined
 
+    // 创建依赖关系
     trackEffects(dep, eventInfo)
   }
 }
